@@ -1,35 +1,58 @@
-import java.util.Random;
-
 public class Main {
 
     public static void main(String[] args) {
 
-        MyHashTable<MyTestingClass, Student> table =
-                new MyHashTable<>(101);
+        WeightedGraph<String> graph =
+                new WeightedGraph<>();
 
-        Random random = new Random();
+        Vertex<String> PARIS =
+                new Vertex<>("PARIS");
 
-        // Add 10000 random elements
-        for (int i = 0; i < 10000; i++) {
+        Vertex<String> ASTANA =
+                new Vertex<>("ASTANA");
 
-            int id = random.nextInt(100000);
+        Vertex<String> ITALY =
+                new Vertex<>("ITALY");
 
-            String code = "CODE" + random.nextInt(100000);
+        Vertex<String> NIGERIA =
+                new Vertex<>("NIGERIA");
 
-            MyTestingClass key =
-                    new MyTestingClass(id, code);
+        Vertex<String> PORTUGAL =
+                new Vertex<>("PORTUGAL");
 
-            Student student =
-                    new Student("Student" + i,
-                            18 + random.nextInt(10));
+        graph.addVertex(PARIS);
+        graph.addVertex(ASTANA);
+        graph.addVertex(ITALY);
+        graph.addVertex(NIGERIA);
+        graph.addVertex(PORTUGAL);
 
-            table.put(key, student);
-        }
+        graph.addEdge(PARIS, ASTANA, 1);
+        graph.addEdge(PARIS, ITALY, 4);
 
-        // Print total size
-        System.out.println("Total elements: " + table.size());
+        graph.addEdge(ASTANA, ITALY, 2);
+        graph.addEdge(ASTANA, NIGERIA, 5);
 
-        // Print bucket distribution
-        table.printBucketSizes();
+        graph.addEdge(ITALY, NIGERIA, 1);
+
+        graph.addEdge(NIGERIA, PORTUGAL, 3);
+
+        System.out.println("BFS:");
+
+        BreadthFirstSearch<String> bfs =
+                new BreadthFirstSearch<>(
+                        graph, PARIS
+                );
+
+        bfs.search();
+
+        System.out.println();
+
+        System.out.println("Dijkstra:");
+
+        DijkstraSearch<String> dijkstra =
+                new DijkstraSearch<>(
+                        graph, PARIS
+                );
+
+        dijkstra.search();
     }
-}
